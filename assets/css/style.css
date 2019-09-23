@@ -1,0 +1,33 @@
+* {
+    border: 1px dotted red;
+}
+
+html {
+    background: url(../images/background_trivia.jpg) no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    width: 75%;
+    margin: 0 auto;
+}
+
+.text {
+    color: white;
+    text-align: center;
+}
+
+#img-title {
+    display: block;
+    margin-top: 2rem;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+}
+
+#container-game {
+    margin-top: 2rem;
+    background-color:rgba(0, 0, 0, 0.4);
+    border-radius: 1em;
+
+}

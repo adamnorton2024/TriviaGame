@@ -4,11 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Trivia Night</title>
+    <link rel='stylesheet' type='text/css' href='./assets/css/reset.css'>
     <link rel='stylesheet' type='text/css' href='./assets/css/style.css'>
     <script type='text/javascript' src='./assets/javascript/app.js' defer></script>
+    
 </head>
 <body>
-    
+    <div class="container">
+        <header class="header">
+            <img id="img-title" src='./assets/images/title-game.png'>
+        </header>
+
+        <div id='container-game'>
+            <div class='game-area' id="timer-div">
+                <h1 class='text'>Time Remaining: <span id="timer"></span></h1>
+            </div>
+            <div class="game-area" id="question-div">
+                <h1 class='text' id='text-question'>There is a question here.</h1>
+            </div>
+            <div class="game-area" id="answers-div">
+                <h2 class='text' id="text-answer-1">There is a possible answers here.</h2>
+                <h2 class='text' id="text-answer-2">There is a possible answers here.</h2>
+                <h2 class='text' id="text-answer-3">There is a possible answers here.</h2>
+                <h2 class='text' id="text-answer-4">There is a possible answers here.</h2>
+            </div>
+            
+        </div>
+        
+    </div>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 </body>
 </html>
