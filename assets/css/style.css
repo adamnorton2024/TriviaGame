@@ -12,9 +12,11 @@ html {
     margin: 0 auto;
 }
 
-.text {
+.game-area {
     color: white;
     text-align: center;
+    text-shadow: 2px 2px black;
+    font-size: 2rem;
 }
 
 #img-title {
@@ -27,7 +29,7 @@ html {
 
 #container-game {
     margin-top: 2rem;
-    background-color:rgba(0, 0, 0, 0.4);
+    background-color:rgba(0, 0, 0, 0.2);
     border-radius: 1em;
 
 }

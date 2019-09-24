@@ -6,21 +6,41 @@ var correct = 0;
 var incorrect = 0;
 
 var timer = 11;
+var questionNumber = 0;
 
 // document ready function
 $(document).ready(function() {
 
     $('text-start-game').on("click", startGame);
-    $('answer-correct').on("click", startGame);
-    $('answer-ia1').on("click", startGame);
-    $('answer-ia2').on("click", startGame);
-    $('answer-ia3').on("click", startGame);
+    $('answer-correct').on("click", correctAnswer);
+    $('answer-ia1').on("click", wrongAnswer);
+    $('answer-ia2').on("click", wrongAnswer);
+    $('answer-ia3').on("click", wrongAnswer);
 
     
 
     startTimer();
+    startGame();
 
  });
+
+ function startGame(){
+    $('#question-div').text(questions[questionNumber].q);
+    $('#text-answer-1').text(questions[questionNumber].ca);
+    $('#text-answer-2').text(questions[questionNumber].ia1);
+    $('#text-answer-3').text(questions[questionNumber].ia2);
+    $('#text-answer-4').text(questions[questionNumber].ia3);
+
+
+ };
+
+ function correctAnswer(){
+
+ };
+
+ function wrongAnswer(){
+
+ };
 
 function startTimer() {
     setTimeout(countDown, 1000);
