@@ -1,6 +1,6 @@
-* {
+/* * {
     border: 1px dotted darkblue;
-}
+} */
 
 html {
     background: url(../images/background_trivia.jpg) no-repeat center center fixed;
@@ -31,7 +31,12 @@ html {
     margin-top: 2rem;
     background-color:rgba(0, 0, 0, 0.2);
     border-radius: 1em;
+    padding: 1em;
 
+}
+
+.spacer {
+    margin-bottom: 2em;
 }
 
 .answer {

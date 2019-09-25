@@ -29,19 +29,9 @@ $(document).ready(function() {
 
  });
 
- function chooseAnswer(){
-     if(!buttonClicked){
-         buttonClicked = true;
-         console.log("button clicked set to true");
-         console.log("button clicked");
-         $('.answer').on("click", checkAnswer);
-     };
-     
- };
 
-function checkAnswer() {
+$('.answer').on("click", function() {
     stopTimer();
-    if(buttonClicked){
         if ($(this).text() === questions[questionNumber].ca) {
             console.log("Correct!");
             correct++;
@@ -56,10 +46,9 @@ function checkAnswer() {
             $('#timer').text("Correct Answer: " + questions[questionNumber].ca);
 
         }
-    }
     startResultTimer();
 
-};
+});
 
  function nextQuestion() {
 
@@ -90,9 +79,7 @@ function checkAnswer() {
      }
 
      startQuestionTimer();
-     buttonClicked = false;
-     console.log("button clicked back to false");
-     chooseAnswer();
+    
  };
 
 
