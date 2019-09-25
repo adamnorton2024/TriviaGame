@@ -5,10 +5,12 @@ var questions = [{ q: "What fruit is a cross between a blackberry and a rasberry
 var correct = 0;
 var incorrect = 0;
 
-var resetTimer = 11;
+var resetResultTimer = 4;
+var resetQuestionTimer = 11;
 var timer;
 var intervalId;
 var clockRunning = false;
+
 
 var questionNumber = 0;
 var answersArr = [];
@@ -19,16 +21,40 @@ $(document).ready(function() {
 
     nextQuestion();
 
-    $('text-start-game').on("click", startGame);
-    $('.answer').on("click", checkAnswer);
+    //$('text-start-game').on("click", startGame);
+    
 
  });
 
- function startGame(){
-
-    $('#question-div').text(questions[questionNumber].q);
-
+ function chooseAnswer(){
+     $('.answer').on("click", checkAnswer);
  };
+
+function checkAnswer() {
+    stopTimer();
+    if ($(this).text() === questions[questionNumber].ca) {
+        console.log("Correct!");
+        correct++;
+        $(this).addClass("correct-answer");
+        $('#timer').text("Correct!");
+    } else {
+        console.log("Wrong");
+        incorrect++;
+        $(this).addClass("wrong-answer");
+        $('#timer').text("Correct Answer: " + questions[questionNumber].ca);
+
+    }
+
+    startResultTimer();
+
+    
+};
+
+//  function startGame(){
+
+//     $('#question-div').text(questions[questionNumber].q);
+
+//  };
 
  function nextQuestion() {
 
@@ -57,35 +83,29 @@ $(document).ready(function() {
          console.log(randomizedAnswers[j]);
      }
 
-     startTimer();
-
+     startQuestionTimer();
+     chooseAnswer();
  };
 
- function checkAnswer(){
-    stopTimer();
-    if($(this).text() === questions[questionNumber].ca){
-        console.log("Correct!");
-        correct++;
-    } else {
-        console.log("Wrong");
-        incorrect++;
-    }
-    questionNumber++;
-    //reset arrays to empty to ready for Next Question Function.
-    answersArr = [];
-    randomizedAnswers = []
-    if(questionNumber < 10){
-        nextQuestion();
-    } else {
-        console.log("Game Over!");
-    }
+
+
+
+function startQuestionTimer(){
     
- };
-
-function startTimer(){
-    timer = resetTimer;
+        timer = resetQuestionTimer;
+    
     if(!clockRunning){
-        intervalId = setInterval(count, 1000);
+        intervalId = setInterval(countQuestion, 1000);
+        clockRunning = true;
+    };
+};
+
+function startResultTimer() {
+
+    timer = resetResultTimer;
+
+    if (!clockRunning) {
+        intervalId = setInterval(countResult, 1000);
         clockRunning = true;
     };
 };
@@ -95,17 +115,40 @@ function stopTimer(){
     clockRunning = false;
 }
 
-function count(){
+function countQuestion(){
     timer--;
 
         if (timer < 10) {
             $('#timer').text("Time Remaining: 0" + timer);
             if (timer === 0){
                 stopTimer();
-                $('#timer').text("Times Up!").css("color", "red");
+                outOfTime();
             }
         } else {
             $('#timer').text("Time Remaining:" + timer);
             console.log(timer);
         };
 };
+
+function countResult() {
+    timer--;
+
+    if(timer === 0){
+        questionNumber++;
+        //reset arrays to empty to ready for Next Question Function.
+        answersArr = [];
+        randomizedAnswers = []
+        $('.correct-answer').removeClass("correct-answer");
+        $('.wrong-answer').removeClass("wrong-answer");
+        if(questionNumber < 10){
+            nextQuestion();
+        } else {
+            console.log("Game Over!");
+        }
+    }
+};
+
+function outOfTime(){
+    $("#timer").addClass("times-up");
+    $('#timer').text("Times Up!");
+}
