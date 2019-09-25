@@ -6,12 +6,13 @@ var correct = 0;
 var incorrect = 0;
 var unanswered = 0;
 
-var buttonClicked = true;
+var buttonClicked = false;
 
 var resetResultTimer = 3;
-var resetQuestionTimer = 11;
+var resetQuestionTimer = 5;
 var timer;
-var intervalId;
+var intervalQuestionId;
+var intervalResultId;
 var clockRunning = false;
 
 
@@ -30,23 +31,30 @@ $(document).ready(function() {
  });
 
 
-$('.answer').on("click", function() {
-    stopTimer();
+$('.answer').on("click", function(event) {
+    if(!buttonClicked){
+        stopTimer();
         if ($(this).text() === questions[questionNumber].ca) {
             console.log("Correct!");
             correct++;
             console.log(correct);
             $(this).addClass("correct-answer");
             $('#timer').text("Correct!");
+            //event.stopImmediatePropagation();
         } else {
             console.log("Wrong");
             incorrect++;
             console.log(incorrect);
             $(this).addClass("wrong-answer");
             $('#timer').text("Correct Answer: " + questions[questionNumber].ca);
-
+            //event.stopImmediatePropagation();
         }
-    startResultTimer();
+        buttonClicked = true;
+        // $('.answer').addClass("no-clicks-allowed");
+        // $('.no-clicks-allowed').removeClass("answer");
+        startResultTimer();
+    }
+    
 
 });
 
@@ -78,7 +86,9 @@ $('.answer').on("click", function() {
          //console.log(randomizedAnswers[j]);
      }
 
+     buttonClicked = false;
      startQuestionTimer();
+
     
  };
 
@@ -90,7 +100,7 @@ function startQuestionTimer(){
         timer = resetQuestionTimer;
     
     if(!clockRunning){
-        intervalId = setInterval(countQuestion, 1000);
+        intervalQuestionId = setInterval(countQuestion, 1000);
         clockRunning = true;
     };
 };
@@ -100,21 +110,24 @@ function startResultTimer() {
     timer = resetResultTimer;
 
     if (!clockRunning) {
-        intervalId = setInterval(countResult, 1000);
+        intervalResultId = setInterval(countResult, 1000);
         clockRunning = true;
     };
 };
 
 function stopTimer(){
-    clearInterval(intervalId);
+    clearInterval(intervalQuestionId);
+    clearInterval(intervalResultId);
     clockRunning = false;
 }
 
 function countQuestion(){
     timer--;
+    console.log("Question: " + timer);
 
         if (timer < 10) {
             $('#timer').text("Time Remaining: 0" + timer);
+            console.log(timer);
             if (timer === 0){
                 stopTimer();
                 outOfTime();
@@ -127,6 +140,7 @@ function countQuestion(){
 
 function countResult() {
     timer--;
+    console.log("Results Timer: " + timer);
 
     if(timer === 0){
         questionNumber++;
@@ -136,6 +150,7 @@ function countResult() {
         $('.correct-answer').removeClass("correct-answer");
         $('.wrong-answer').removeClass("wrong-answer");
         if(questionNumber < 10){
+            stopTimer();
             nextQuestion();
         } else {
             gameOver();
@@ -153,7 +168,6 @@ function gameOver(){
     $("#answers-div").append("<p>Unanswered: " + unanswered + "</p>");
     $("#answers-div").append("<div class='text answer' id='btn-reset'>Reset</div>");
     
-
 };
 
 function outOfTime(){
