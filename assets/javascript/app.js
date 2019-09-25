@@ -63,7 +63,7 @@ $('.answer').on("click", function() {
      answersArr.push(questions[questionNumber].ia3);
      //console.log(answersArr);
 
-     // randomize answers so they always appear in the same order
+     // randomize answers so they don't always appear in the same order
      for (var i = 0; i < 4; i++) {
          var randomNumber = Math.floor(Math.random() * answersArr.length);
          randomizedAnswers.push(answersArr[randomNumber]);
