@@ -5,7 +5,10 @@ var questions = [{ q: "What fruit is a cross between a blackberry and a rasberry
 var correct = 0;
 var incorrect = 0;
 
-var timer = 10;
+var resetTimer = 11;
+var timer;
+var intervalId;
+var clockRunning = false;
 
 var questionNumber = 0;
 var answersArr = [];
@@ -14,7 +17,6 @@ var randomizedAnswers = [];
 // document ready function
 $(document).ready(function() {
 
-    //startGame();
     nextQuestion();
 
     $('text-start-game').on("click", startGame);
@@ -55,11 +57,12 @@ $(document).ready(function() {
          console.log(randomizedAnswers[j]);
      }
 
-     startQuestionTimer();
+     startTimer();
 
  };
 
  function checkAnswer(){
+    stopTimer();
     if($(this).text() === questions[questionNumber].ca){
         console.log("Correct!");
         correct++;
@@ -79,26 +82,30 @@ $(document).ready(function() {
     
  };
 
+function startTimer(){
+    timer = resetTimer;
+    if(!clockRunning){
+        intervalId = setInterval(count, 1000);
+        clockRunning = true;
+    };
+};
 
-function startQuestionTimer() {
-    setTimeout(countDown, 1000);
+function stopTimer(){
+    clearInterval(intervalId);
+    clockRunning = false;
+}
 
-    function countDown() {
-        timer--;
-        if (timer > 0) {
-            setTimeout(countDown, 1000);
-        };
+function count(){
+    timer--;
 
         if (timer < 10) {
             $('#timer').text("Time Remaining: 0" + timer);
             if (timer === 0){
+                stopTimer();
                 $('#timer').text("Times Up!").css("color", "red");
             }
         } else {
             $('#timer').text("Time Remaining:" + timer);
             console.log(timer);
         };
-
-    };
-
 };
