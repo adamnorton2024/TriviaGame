@@ -1,12 +1,12 @@
 
 //define global variables
-var questions = [{ q: "What fruit is a cross between a blackberry and a rasberry?", ca: "Tayberry", ia1: "Mango", ia2: "Grape", ia3: "Blueberry" }, { q: "What is fear of the color purple know as?", ca: "Porphyrophobia", ia1: "Acrophobia", ia2: "Arachniphobia", ia3: "Claustrophobia" }, { q: "What is another name for a prairie wolf?", ca: "Coyote", ia1: "Hyena", ia2: "Jackel", ia3: "Anubis" }, { q: "Which is the largest whale?", ca: "Blue Whale", ia1: "Humpback Whale", ia2: "Minke Whale", ia3: "Moby Dick" }, { q: "What is the only mammal with 4 forward facing knees?", ca: "Elephant", ia1: "Hippo", ia2: "Rhino", is3: "Dog" }, { q: "When standing in the sunlight, what vitamin does our body synthesize?", ca: "Vitamin D", ia1: "Vitamin C", ia2: "Vitamin B", ia3: "Calcium" }, { q: "What planet is named after the God of Love?", ca: "Venus", ia1: "Aphrodite", ia2: "Mercury", ia3: "Saturn" }, { q: "What gas is exhaled by humans?", ca: "Carbon Dioxide", ia1: "Methane", ia2: "Helium", ia3: "Oxygen" }, { q: "What is the heaviest internal organ in the human body?", ca: "Liver", ia1: "Heart", ia2: "Spleen", ia3: "Gallbladder" }, { q: "What is added to bread to make it swell?", ca: "Yeast", ia1: "Almond", ia2: "Cashew", ia3: "Tomato" }];
+var questions = [{ q: "What fruit is a cross between a blackberry and a rasberry?", ca: "Tayberry", ia1: "Mango", ia2: "Grape", ia3: "Blueberry" }, { q: "What is fear of the color purple know as?", ca: "Porphyrophobia", ia1: "Acrophobia", ia2: "Arachniphobia", ia3: "Claustrophobia" }, { q: "What is another name for a prairie wolf?", ca: "Coyote", ia1: "Hyena", ia2: "Jackel", ia3: "Anubis" }, { q: "Which is the largest whale?", ca: "Blue Whale", ia1: "Humpback Whale", ia2: "Minke Whale", ia3: "Moby Dick" }, { q: "What is the only mammal with 4 forward facing knees?", ca: "Elephant", ia1: "Hippo", ia2: "Rhino", ia3: "Dog" }, { q: "When standing in the sunlight, what vitamin does our body synthesize?", ca: "Vitamin D", ia1: "Vitamin C", ia2: "Vitamin B", ia3: "Calcium" }, { q: "What planet is named after the God of Love?", ca: "Venus", ia1: "Aphrodite", ia2: "Mercury", ia3: "Saturn" }, { q: "What gas is exhaled by humans?", ca: "Carbon Dioxide", ia1: "Methane", ia2: "Helium", ia3: "Oxygen" }, { q: "What is the heaviest internal organ in the human body?", ca: "Liver", ia1: "Heart", ia2: "Spleen", ia3: "Gallbladder" }, { q: "What is added to bread to make it swell?", ca: "Yeast", ia1: "Almond", ia2: "Cashew", ia3: "Tomato" }];
 
 var correct = 0;
 var incorrect = 0;
 var unanswered = 0;
 
-var buttonClicked = false;
+var buttonClicked = true;
 
 var resetResultTimer = 3;
 var resetQuestionTimer = 5;
@@ -23,15 +23,19 @@ var randomizedAnswers = [];
 // document ready function
 $(document).ready(function() {
 
-    nextQuestion();
-
-    //$('text-start-game').on("click", startGame);
     
+    $(".answer").css("visibility", "hidden");
+    $('#timer').text("Click Here to Play! ");
+
+    $('#timer').on("click", function() {
+        $(".answer").css("visibility", "visible");
+        nextQuestion();
+    })
 
  });
 
-
-$('.answer').on("click", function(event) {
+ 
+$('.answer').on("click", function() {
     if(!buttonClicked){
         stopTimer();
         if ($(this).text() === questions[questionNumber].ca) {
@@ -58,10 +62,42 @@ $('.answer').on("click", function(event) {
 
 });
 
+$('#btn-reset').on("click", function () {
+    
+    console.log("reset");
+   
+    
+    // var correct = 0;
+    // var incorrect = 0;
+    // var unanswered = 0;
+
+    // var buttonClicked = false;
+
+    // var resetResultTimer = 3;
+    // var resetQuestionTimer = 5;
+    // var timer;
+    // var intervalQuestionId;
+    // var intervalResultId;
+    // var clockRunning = false;
+
+
+    // var questionNumber = 0;
+    // var answersArr = [];
+    // var randomizedAnswers = [];
+
+    // $('#correct-answers').remove();
+    // $('#incorrect-answers').remove();
+    // $('#unanswered').remove();
+    // $('#btn-reset').remove();
+
+    // $('.answer').css("display", "block");
+});
+
  function nextQuestion() {
 
-     $('#timer').empty();
+     $('#timer').text("Time Remaining: ");
     // print current answer to HTML element
+    startQuestionTimer();
     $('#question-div').text(questions[questionNumber].q);
 
     // push answers to answersArr
@@ -87,7 +123,7 @@ $('.answer').on("click", function(event) {
      }
 
      buttonClicked = false;
-     startQuestionTimer();
+     //startQuestionTimer();
 
     
  };
@@ -123,24 +159,24 @@ function stopTimer(){
 
 function countQuestion(){
     timer--;
-    console.log("Question: " + timer);
+    //console.log("Question: " + timer);
 
         if (timer < 10) {
             $('#timer').text("Time Remaining: 0" + timer);
-            console.log(timer);
+           // console.log(timer);
             if (timer === 0){
                 stopTimer();
                 outOfTime();
             }
         } else {
-            $('#timer').text("Time Remaining:" + timer);
-            console.log(timer);
+            $('#timer').text("Time Remaining: " + timer);
+            //console.log(timer);
         };
 };
 
 function countResult() {
     timer--;
-    console.log("Results Timer: " + timer);
+    //console.log("Results Timer: " + timer);
 
     if(timer === 0){
         questionNumber++;
@@ -158,20 +194,28 @@ function countResult() {
     }
 };
 
-function gameOver(){
-    console.log("Game Over");
-    $('#timer').empty();
-    $("#question-div").empty();
-    $(".answer").css("display", "none");
-    $("#answers-div").append("<p>Correct Answers: " + correct + "</p>");
-    $("#answers-div").append("<p>Incorrect Answers: " + incorrect + "</p>");
-    $("#answers-div").append("<p>Unanswered: " + unanswered + "</p>");
-    $("#answers-div").append("<div class='text answer' id='btn-reset'>Reset</div>");
-    
-};
-
-function outOfTime(){
+function outOfTime() {
     unanswered++;
     $('#timer').text("Correct Answer: " + questions[questionNumber].ca);
     startResultTimer();
 };
+
+function gameOver(){
+    stopTimer();
+    console.log("Game Over");
+    $('#timer').empty();
+    $('#timer').css("visibility", "hidden");
+    $("#question-div").empty();
+    $("#text-answer-0").text("Game Over" );
+    $("#text-answer-1").text("Correct Answers: " + correct );
+    $("#text-answer-2").text("Incorrect Answers: " + incorrect );
+    $("#text-answer-3").text("Unanswered: " + unanswered );
+    $("#answers-div").append("<div class='text answer' id='btn-reset'>Try Again!</div>");
+    
+};
+
+
+
+
+
+
