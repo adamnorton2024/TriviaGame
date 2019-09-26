@@ -9,7 +9,7 @@ var unanswered = 0;
 var buttonClicked = true;
 
 var resetResultTimer = 3;
-var resetQuestionTimer = 5;
+var resetQuestionTimer = 15;
 var timer;
 var intervalQuestionId;
 var intervalResultId;
@@ -62,36 +62,36 @@ $('.answer').on("click", function() {
 
 });
 
-$('#btn-reset').on("click", function () {
-    
+
+function reset(){
     console.log("reset");
-   
+
+    correct = 0;
+    incorrect = 0;
+    unanswered = 0;
+
+    buttonClicked = true;
+
+    resetResultTimer = 3;
+    resetQuestionTimer = 15;
+    timer;
+    intervalQuestionId;
+    intervalResultId;
+    clockRunning = false;
+
+    questionNumber = 0;
+    answersArr = [];
+    randomizedAnswers = [];
+
+    $("#btn-reset").remove();
     
-    // var correct = 0;
-    // var incorrect = 0;
-    // var unanswered = 0;
-
-    // var buttonClicked = false;
-
-    // var resetResultTimer = 3;
-    // var resetQuestionTimer = 5;
-    // var timer;
-    // var intervalQuestionId;
-    // var intervalResultId;
-    // var clockRunning = false;
+    $(".answer").css("visibility", "visible");
+    $('#timer').css("visibility", "visible");
+    nextQuestion();
+    
+};
 
 
-    // var questionNumber = 0;
-    // var answersArr = [];
-    // var randomizedAnswers = [];
-
-    // $('#correct-answers').remove();
-    // $('#incorrect-answers').remove();
-    // $('#unanswered').remove();
-    // $('#btn-reset').remove();
-
-    // $('.answer').css("display", "block");
-});
 
  function nextQuestion() {
 
@@ -210,7 +210,7 @@ function gameOver(){
     $("#text-answer-1").text("Correct Answers: " + correct );
     $("#text-answer-2").text("Incorrect Answers: " + incorrect );
     $("#text-answer-3").text("Unanswered: " + unanswered );
-    $("#answers-div").append("<div class='text answer' id='btn-reset'>Try Again!</div>");
+    $("#answers-div").append("<div class='text answer' id='btn-reset' onClick='reset()'>Try Again!</div>");
     
 };
 
